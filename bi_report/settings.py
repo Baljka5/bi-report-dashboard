@@ -27,7 +27,7 @@ SECRET_KEY = '_t#k+@0s2_3@eau_+rxl^wgshs4q6zap%axasxngfesr#pkuz1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['bi.cumongol.mn']
+ALLOWED_HOSTS = ['bi.cumongol.mn', 'localhost', 'pp.cumongol.mn']
 
 
 # Application definition

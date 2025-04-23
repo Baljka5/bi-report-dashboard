@@ -7,29 +7,18 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         function showLinkIframe(category, title, url) {
-            // category-г hide, iframe-г show
+            // category хэсгийг hide
             document.getElementById("category-container").classList.add("hidden");
-            const iframeContainer = document.getElementById("iframe-container");
-            iframeContainer.classList.remove("hidden");
 
-            // iframe-д зам болон iframe агуулга оруулах
-            iframeContainer.innerHTML = `
-                <div class="text-sm text-gray-600 mb-2 flex items-center justify-between">
-                    <div>
-                        <a href="#" onclick="goHome()" class="text-blue-600 hover:underline">Home</a> /
-                        <span>${category}</span> /
-                        <span class="text-gray-800 font-semibold">${title}</span>
-                    </div>
-                    <button onclick="goHome()" class="text-sm text-blue-600 hover:underline">Буцах</button>
-                </div>
+            // iframe container-ийг харуулна
+            const detailBox = document.getElementById("iframe-container");
+            detailBox.classList.remove("hidden");
+
+            // iframe харуулах
+            detailBox.innerHTML = `
+                <div class="text-sm text-gray-500 mb-2">/ ${category} / ${title}</div>
                 <iframe src="${url}" class="w-full h-[420px] border rounded" frameborder="0" allowfullscreen></iframe>
             `;
-        }
-
-        function goHome() {
-            // iframe-г hide, category-г show
-            document.getElementById("iframe-container").classList.add("hidden");
-            document.getElementById("category-container").classList.remove("hidden");
         }
     </script>
 </head>
@@ -39,7 +28,7 @@
 <header class="w-full border-b bg-white shadow-sm">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         <div class="flex items-center space-x-3">
-            <img src="{% static 'images/CU logo.png' %}" alt="Logo" class="h-16 w-16 object-contain">
+            <img src="{% static 'images/logo.png' %}" alt="Logo" class="h-10 w-10 object-contain">
             <h1 class="text-2xl font-bold">BI Report</h1>
         </div>
         <nav class="space-x-6 text-sm">
@@ -56,7 +45,7 @@
 
         <!-- Left Side -->
         <div class="flex-1">
-            <!-- Categories section -->
+            <!-- Category section -->
             <div id="category-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-6">
                 {% for category in categories %}
                     <div>
@@ -77,8 +66,8 @@
 
             <!-- Iframe container -->
             <div id="iframe-container"
-                 class="hidden border rounded bg-white p-4 shadow-sm min-h-[420px] text-center text-gray-400">
-                <!-- Filled dynamically -->
+                 class="hidden border rounded bg-white p-2 shadow-sm min-h-[420px] text-center text-gray-400 flex items-center justify-center">
+                <!-- Initially hidden and filled dynamically -->
             </div>
         </div>
 
@@ -106,7 +95,7 @@
 <!-- Footer -->
 <footer class="w-full bg-white border-t">
     <div class="max-w-7xl mx-auto px-6 py-6 text-sm text-gray-500 flex justify-between items-center">
-        <p>&copy; 2025.</p>
+        <p>&copy; 2025 Your Company. All rights reserved.</p>
         <div class="space-x-4">
             <a href="#" class="hover:text-gray-700">Privacy</a>
             <a href="#" class="hover:text-gray-700">Terms</a>

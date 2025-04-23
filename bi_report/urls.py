@@ -15,9 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from bi_report.report_app.views import dashboard_view
-
+from bi_report.report_app.views import dashboard_view, category_detail
 urlpatterns = [
     path('', dashboard_view, name='dashboard'),
-       path('admin/', admin.site.urls),
+    path('category/<int:category_id>/', category_detail, name='category_detail'),
+    path('admin/', admin.site.urls),
 ]
