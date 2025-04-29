@@ -18,12 +18,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
-from bi_report.report_app.views import dashboard_view, docs_view, news_view
+from bi_report.report_app.views import dashboard_view, docs_view, news_view, news_detail_view
 
 urlpatterns = [
     path('', dashboard_view, name='dashboard'),  # Home
     path('docs/', docs_view, name='docs'),  # Docs
     path('news/', news_view, name='news'),  # News
+    path('news/<int:news_id>/', news_detail_view, name='news_detail'),
     path('admin/', admin.site.urls),
 ]
 
