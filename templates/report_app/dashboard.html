@@ -40,12 +40,15 @@
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         <div class="flex items-center space-x-3">
             <img src="{% static 'images/CU_logo.png' %}" alt="Logo" class="h-16 w-16 object-contain">
-            <h1 class="text-2xl font-bold">BI Report</h1>
+            <h1 class="text-2xl font-bold">BUSINESS INTELLIGENCE HUB</h1>
         </div>
         <nav class="space-x-6 text-sm">
-            {% for menu in menus %}
-                <a href="{{ menu.url }}" class="text-blue-600 hover:underline">{{ menu.title }}</a>
-            {% endfor %}
+            <a href="{% url 'dashboard' %}"
+               class="{% if active_menu == 'home' %}text-blue-700 font-semibold{% else %}text-blue-600 hover:underline{% endif %}">Home</a>
+            <a href="{% url 'docs' %}"
+               class="{% if active_menu == 'docs' %}text-blue-700 font-semibold{% else %}text-blue-600 hover:underline{% endif %}">Docs</a>
+            <a href="{% url 'news' %}"
+               class="{% if active_menu == 'news' %}text-blue-700 font-semibold{% else %}text-blue-600 hover:underline{% endif %}">News</a>
         </nav>
     </div>
 </header>
@@ -105,8 +108,8 @@
 
 <!-- Footer -->
 <footer class="w-full bg-white border-t">
-    <div class="max-w-7xl mx-auto px-6 py-6 text-sm text-gray-500 flex justify-between items-center">
-        <p>&copy; 2025.</p>
+    <div class="max-w-6xl mx-auto px-5 py-5 text-sm text-gray-500 flex justify-between items-center">
+        <p>©2025 Made with ❤️ by Data Management Team / IT</p>
         <div class="space-x-4">
             <a href="#" class="hover:text-gray-700">Privacy</a>
             <a href="#" class="hover:text-gray-700">Terms</a>
