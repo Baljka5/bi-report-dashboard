@@ -1,122 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <title>Link Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+{% extends "report_app/base.html" %}
+{% load static %}
+
+{% block content %}
     <script>
         function showLinkIframe(category, title, url) {
-            // category-г hide, iframe-г show
             document.getElementById("category-container").classList.add("hidden");
+            document.getElementById("news-container").classList.add("hidden"); // ✅ нэмсэн
+
             const iframeContainer = document.getElementById("iframe-container");
             iframeContainer.classList.remove("hidden");
 
-            // iframe-д зам болон iframe агуулга оруулах
             iframeContainer.innerHTML = `
-                <div class="text-sm text-gray-600 mb-2 flex items-center justify-between">
-                    <div>
-                        <a href="#" onclick="goHome()" class="text-blue-600 hover:underline">Home</a> /
-                        <span>${category}</span> /
-                        <span class="text-gray-800 font-semibold">${title}</span>
-                    </div>
-                    <button onclick="goHome()" class="text-sm text-blue-600 hover:underline">Буцах</button>
-                </div>
-                <iframe src="${url}" class="w-full h-[420px] border rounded" frameborder="0" allowfullscreen></iframe>
-            `;
+        <div class="text-sm text-gray-600 mb-2 flex items-center justify-between">
+            <div>
+                <a href="#" onclick="goHome()" class="text-blue-600 hover:underline">Home</a> /
+                <span>${category}</span> /
+                <span class="text-gray-800 font-semibold">${title}</span>
+            </div>
+            <button onclick="goHome()" class="text-sm text-blue-600 hover:underline">Буцах</button>
+        </div>
+        <iframe src="${url}" class="w-full h-[720px] border rounded" frameborder="0" allowfullscreen></iframe>
+    `;
         }
 
         function goHome() {
-            // iframe-г hide, category-г show
             document.getElementById("iframe-container").classList.add("hidden");
             document.getElementById("category-container").classList.remove("hidden");
+            document.getElementById("news-container").classList.remove("hidden"); // ✅ нэмсэн
         }
     </script>
-</head>
-<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
 
-<!-- Header -->
-<header class="w-full border-b bg-white shadow-sm">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        <div class="flex items-center space-x-3">
-            <img src="{% static 'images/CU_logo.png' %}" alt="Logo" class="h-16 w-16 object-contain">
-            <h1 class="text-2xl font-bold">BUSINESS INTELLIGENCE HUB</h1>
-        </div>
-        <nav class="space-x-6 text-sm">
-            <a href="{% url 'dashboard' %}"
-               class="{% if active_menu == 'home' %}text-blue-700 font-semibold{% else %}text-blue-600 hover:underline{% endif %}">Home</a>
-            <a href="{% url 'docs' %}"
-               class="{% if active_menu == 'docs' %}text-blue-700 font-semibold{% else %}text-blue-600 hover:underline{% endif %}">Docs</a>
-            <a href="{% url 'news' %}"
-               class="{% if active_menu == 'news' %}text-blue-700 font-semibold{% else %}text-blue-600 hover:underline{% endif %}">News</a>
-        </nav>
-    </div>
-</header>
+    <main class="flex-grow">
+        <div class="max-w-7xl mx-auto px-6 py-16 flex flex-col md:flex-row gap-12 text-sm">
 
-<!-- Main -->
-<main class="flex-grow">
-    <div class="max-w-7xl mx-auto px-6 py-16 flex flex-col md:flex-row gap-12 text-sm">
-
-        <!-- Left Side -->
-        <div class="flex-1">
-            <!-- Categories section -->
-            <div id="category-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-6">
-                {% for category in categories %}
-                    <div>
-                        <h2 class="font-semibold text-gray-900 mb-2">{{ category.name }}</h2>
-                        <ul class="space-y-2">
-                            {% for link in category.links.all %}
-                                <li>
-                                    <button onclick="showLinkIframe('{{ category.name }}', '{{ link.title }}', '{{ link.url }}')"
-                                            class="text-blue-600 hover:underline focus:outline-none">
-                                        {{ link.title }}
-                                    </button>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                {% endfor %}
-            </div>
-
-            <!-- Iframe container -->
-            <div id="iframe-container"
-                 class="hidden border rounded bg-white p-4 shadow-sm min-h-[420px] text-center text-gray-400">
-                <!-- Filled dynamically -->
-            </div>
-        </div>
-
-        <!-- Right Side: News -->
-        <div class="w-full md:w-80 flex-shrink-0">
-            <section>
-                <h2 class="font-semibold text-gray-900 mb-3">МЭДЭЭ МЭДЭЭЛЭЛ</h2>
-                <ul class="space-y-4">
-                    {% for news in news_items %}
-                        <li class="bg-white p-4 rounded shadow-sm border border-gray-100">
-                            <h3 class="font-semibold text-gray-800">{{ news.title }}</h3>
-                            <p class="text-xs text-gray-500 mb-1">{{ news.published_at|date:"Y-m-d H:i" }}</p>
-                            <p class="text-gray-700 text-sm">{{ news.content|truncatechars:100 }}</p>
-                        </li>
-                    {% empty %}
-                        <li class="text-gray-400">Одоогоор мэдээ мэдээлэл алга байна.</li>
+            <!-- Left Side -->
+            <div class="flex-1">
+                <!-- Categories section -->
+                <div id="category-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-6">
+                    {% for category in categories %}
+                        <div>
+                            <h2 class="font-semibold text-gray-900 mb-2">{{ category.name }}</h2>
+                            <ul class="space-y-2">
+                                {% for link in category.links.all %}
+                                    <li>
+                                        <button onclick="showLinkIframe('{{ category.name }}', '{{ link.title }}', '{{ link.url }}')"
+                                                class="text-blue-600 hover:underline focus:outline-none">
+                                            {{ link.title }}
+                                        </button>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
                     {% endfor %}
-                </ul>
-            </section>
+                </div>
+
+                <!-- Iframe container -->
+                <div id="iframe-container"
+                     class="hidden border rounded bg-white p-4 shadow-sm min-h-[420px] text-center text-gray-400">
+                    <!-- Filled dynamically -->
+                </div>
+            </div>
+
+            <!-- Right Side: News -->
+            <div id="news-container" class="w-full md:w-80 flex-shrink-0">
+                <section>
+                    <h2 class="font-semibold text-gray-900 mb-3">МЭДЭЭ МЭДЭЭЛЭЛ</h2>
+                    <ul class="space-y-4">
+                        {% for news in news_items %}
+                            <li class="bg-white p-4 rounded shadow-sm border border-gray-100">
+                                <h3 class="font-semibold text-gray-800">{{ news.title }}</h3>
+                                <p class="text-xs text-gray-500 mb-1">{{ news.published_at|date:"Y-m-d H:i" }}</p>
+                                <p class="text-gray-700 text-sm">{{ news.content|truncatechars:100 }}</p>
+                            </li>
+                        {% empty %}
+                            <li class="text-gray-400">Одоогоор мэдээ мэдээлэл алга байна.</li>
+                        {% endfor %}
+                    </ul>
+                </section>
+            </div>
+
         </div>
-
-    </div>
-</main>
-
-<!-- Footer -->
-<footer class="w-full bg-white border-t">
-    <div class="max-w-6xl mx-auto px-5 py-5 text-sm text-gray-500 flex justify-between items-center">
-        <p>©2025 Made with ❤️ by Data Management Team / IT</p>
-        <div class="space-x-4">
-            <a href="#" class="hover:text-gray-700">Privacy</a>
-            <a href="#" class="hover:text-gray-700">Terms</a>
-            <a href="#" class="hover:text-gray-700">Contact</a>
-        </div>
-    </div>
-</footer>
-
-</body>
-</html>
+    </main>
+{% endblock %}
