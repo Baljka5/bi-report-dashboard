@@ -2,34 +2,6 @@
 {% load static %}
 
 {% block content %}
-    <script>
-        function showLinkIframe(category, title, url) {
-            document.getElementById("category-container").classList.add("hidden");
-            document.getElementById("news-container").classList.add("hidden"); // ✅ нэмсэн
-
-            const iframeContainer = document.getElementById("iframe-container");
-            iframeContainer.classList.remove("hidden");
-
-            iframeContainer.innerHTML = `
-        <div class="text-sm text-gray-600 mb-2 flex items-center justify-between">
-            <div>
-                <a href="#" onclick="goHome()" class="text-blue-600 hover:underline">Home</a> /
-                <span>${category}</span> /
-                <span class="text-gray-800 font-semibold">${title}</span>
-            </div>
-            <button onclick="goHome()" class="text-sm text-blue-600 hover:underline">Буцах</button>
-        </div>
-        <iframe src="${url}" class="w-full h-[720px] border rounded" frameborder="0" allowfullscreen></iframe>
-    `;
-        }
-
-        function goHome() {
-            document.getElementById("iframe-container").classList.add("hidden");
-            document.getElementById("category-container").classList.remove("hidden");
-            document.getElementById("news-container").classList.remove("hidden"); // ✅ нэмсэн
-        }
-    </script>
-
     <main class="flex-grow">
         <div class="max-w-7xl mx-auto px-6 py-16 flex flex-col md:flex-row gap-12 text-sm">
 
@@ -43,21 +15,15 @@
                             <ul class="space-y-2">
                                 {% for link in category.links.all %}
                                     <li>
-                                        <button onclick="showLinkIframe('{{ category.name }}', '{{ link.title }}', '{{ link.url }}')"
-                                                class="text-blue-600 hover:underline focus:outline-none">
+                                        <!-- Шинэ хуудас руу шилжих холбоос -->
+                                        <a href="{{ link.url }}" target="_blank" class="text-blue-600 hover:underline">
                                             {{ link.title }}
-                                        </button>
+                                        </a>
                                     </li>
                                 {% endfor %}
                             </ul>
                         </div>
                     {% endfor %}
-                </div>
-
-                <!-- Iframe container -->
-                <div id="iframe-container"
-                     class="hidden border rounded bg-white p-4 shadow-sm min-h-[420px] text-center text-gray-400">
-                    <!-- Filled dynamically -->
                 </div>
             </div>
 
