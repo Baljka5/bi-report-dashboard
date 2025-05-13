@@ -4,19 +4,19 @@
     <div class="max-w-7xl mx-auto px-6 py-16 text-sm">
         <h2 class="text-xl font-bold mb-6">DOCUMENT</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-            {% for category in categories %}
-                <div>
-                    <h3 class="font-semibold text-gray-900 mb-2">{{ category.name }}</h3>
-                    <ul class="space-y-2">
-                        {% for link in category.links.all %}
-                            <li>
-                                <a href="{{ link.url }}" target="_blank"
-                                   class="text-blue-600 hover:underline">{{ link.title }}</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endfor %}
+{#            {% for category in categories %}#}
+{#                <div>#}
+{#                    <h3 class="font-semibold text-gray-900 mb-2">{{ category.name }}</h3>#}
+{#                    <ul class="space-y-2">#}
+{#                        {% for link in category.links.all %}#}
+{#                            <li>#}
+{#                                <a href="{{ link.url }}" target="_blank"#}
+{#                                   class="text-blue-600 hover:underline">{{ link.title }}</a>#}
+{#                            </li>#}
+{#                        {% endfor %}#}
+{#                    </ul>#}
+{#                </div>#}
+{#            {% endfor %}#}
         </div>
     </div>
 {% endblock %}
